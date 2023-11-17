@@ -6,6 +6,8 @@ products = [
     {"id": 1, "productName": "Laptop", "category": "Electronics", "price": 999.99},
     {"id": 2, "productName": "Book", "category": "Books", "price": 19.99},
 ]
+
+
 @app.route('/product/<int:ProductId>', methods=['GET'])
 def GetProduct(ProductId):
     product = next((p for p in products if p['id'] == ProductId), None)
@@ -13,6 +15,7 @@ def GetProduct(ProductId):
         return jsonify(product)
     else:
         return jsonify({"message": "Product not found"}), 404
+
 
 @app.route('/product', methods=['POST'])
 def AddProduct():
@@ -36,3 +39,10 @@ def AddProduct():
     return jsonify({"message": "Product added successfully", "id": NewId}), 201
 
 
+@app.route('/products', methods=['GET'])
+def GetAllProducts():
+    return jsonify(products)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
